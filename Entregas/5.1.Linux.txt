@@ -1,0 +1,25 @@
+
+
+Escribe el comando (o secuencia de comandos) necesarios escribir en consola el número de ficheros de texto que hay en el directorio de trabajo y cuyo nombre empiece por la letra a. 
+
+ls -l | grep '^a.*\.txt' | wc -l
+
+Escribe el código de un script que tenga un parámetro. El script debe pedir al usuario que introduzca por consola una frase y añadirá esa frase al final de cada uno de los ficheros de texto del directorio de trabajo que contengan la palabra indicada en el parámetro del script. 
+
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+  echo "Uso: $0 palabra_a_buscar"
+  exit 1
+fi
+
+palabra_a_buscar=$1
+
+echo -n "Introduce una frase: "
+read frase
+
+for archivo in *.txt; do
+  if grep -q "$palabra_a_buscar" "$archivo"; then
+    echo "$frase" >> "$archivo"
+  fi
+done
